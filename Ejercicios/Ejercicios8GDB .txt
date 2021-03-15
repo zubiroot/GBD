@@ -1,0 +1,43 @@
+CREATE DATABASE pueblo;
+USE pueblo;
+
+CREATE TABLE Municipio
+(Id INT,
+Nombre VARCHAR(10),
+CodPostal INT,
+Provincia VARCHAR(10),
+PRIMARY KEY(Id));
+
+CREATE TABLE Vivienda
+(Id INT,
+TipoVia VARCHAR(15),
+NombreVia VARCHAR(15),
+Numero INT,
+IdMunicipio INT,
+PRIMARY KEY(Id),
+FOREIGN KEY(IdMunicipio) references Municipio(Id));
+
+CREATE TABLE Persona
+(Dni VARCHAR(9),
+Nombre VARCHAR(15),
+FechaNac date,
+Sexo VARCHAR(1),
+IdVivienda INT,
+PRIMARY KEY(Dni),
+CONSTRAINT CHECK(Sexo IN ('m','f')),
+FOREIGN KEY (IdVivienda) references Vivienda(Id));
+
+CREATE TABLE cabezaFamilia
+(Dni VARCHAR(9),
+IdVivienda INT NULL UNIQUE,
+PRIMARY KEY(Dni),
+FOREIGN KEY (Dni) references Persona(Dni),
+FOREIGN KEY (IdVivienda) references Vivienda(Id));
+
+
+CREATE TABLE posee
+(Dni VARCHAR(9),
+IdVivienda INT,
+PRIMARY KEY(Dni,IdVivienda),
+FOREIGN KEY (Dni) references Persona(Dni),
+FOREIGN KEY (IdVivienda) references Vivienda(Id));

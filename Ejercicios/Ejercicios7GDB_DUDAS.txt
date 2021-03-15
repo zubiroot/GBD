@@ -1,0 +1,62 @@
+CREATE DATABASE empresa7;
+USE empresa7;
+
+CREATE TABLE Actores
+(Nombre VARCHAR(15),
+Nacionalidad VARCHAR(15),
+Sexo VARCHAR(1),
+PRIMARY KEY(Nombre),
+CONSTRAINT CHECK(Sexo IN ('m','f')));
+
+CREATE TABLE Director
+(Nombre VARCHAR(15),
+Nacionalidad VARCHAR(15),
+PRIMARY KEY(Nombre));
+
+CREATE TABLE Pelicula
+(Id INT,
+Titulo VARCHAR(15),
+Productora VARCHAR(15),
+Nacionalidad VARCHAR(15),
+Fecha DATE,
+Director VARCHAR(15),
+PRIMARY KEY(Id),
+FOREIGN KEY (Director) references Director(Nombre));
+
+CREATE TABLE actua
+(Actor VARCHAR(15),
+Id_Peli INT,
+Prota VARCHAR(2),
+PRIMARY KEY(Actor,Id_Peli),
+FOREIGN KEY (Actor) references Actores(Nombre),
+FOREIGN KEY (Id_Peli) references Pelicula(Id));
+
+CREATE TABLE Socio
+(Dni VARCHAR(9),
+Nombre VARCHAR(15),
+Dirección VARCHAR(15),
+Telefono INT,
+Avalador VARCHAR(15),
+PRIMARY KEY(Dni),
+FOREIGN KEY(Avalador) references Socio(Dni));
+
+CREATE TABLE Ejemplar
+(Id_Peli INT,
+Numero INT,
+Estado VARCHAR(15),
+PRIMARY KEY(Id_Peli,Numero),
+FOREIGN KEY(Id_Peli) references Pelicula(Id));
+
+CREATE TABLE alquila
+(Dni VARCHAR(9),
+Id_Peli INT,
+Numero INT,
+FechaAlquiler DATE,
+FechaDevolucion DATE,
+PRIMARY KEY(Dni,Id_Peli,Numero,FechaAlquiler),
+FOREIGN KEY(Dni) references Socio(Dni),
+FOREIGN KEY(Id_Peli) references Ejemplar(Id_Peli),
+FOREIGN KEY(numero) references Ejemplar(numero));
+
+FOREIGN KEY(numero) references Ejemplar(numero) NO ESTÁ BIEN
+NO SE COMO HACER LO DE LAS FECHAS

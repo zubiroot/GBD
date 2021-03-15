@@ -1,0 +1,37 @@
+CREATE DATABASE empresa4;
+USE empresa4;
+
+CREATE TABLE ModeloDormitorio
+(Cod INT,
+PRIMARY KEY(Cod));
+
+CREATE TABLE Cliente
+(NIF VARCHAR(9),
+Nombre VARCHAR(15),
+Direccion VARCHAR(15),
+Telefono INT,
+PRIMARY KEY(NIF));
+
+CREATE TABLE Montador
+(NIF VARCHAR(9),
+Nombre VARCHAR(15),
+Direccion VARCHAR(15),
+Telefono INT,
+PRIMARY KEY(NIF));
+
+
+CREATE TABLE Compra
+(NIF_C VARCHAR(9),
+Modelo INT,
+FechaCompra Date,
+PRIMARY KEY(NIF_C,Modelo,FechaCompra),
+FOREIGN KEY (NIF_C) references Cliente(NIF),
+FOREIGN KEY (Modelo) references ModeloDormitorio(Cod));
+
+CREATE TABLE Monta
+(Modelo INT,
+NIF_M VARCHAR(9),
+FechaMontaje Date,
+PRIMARY KEY(NIF_M,Modelo,FechaMontaje),
+FOREIGN KEY (NIF_M) references Montador(NIF),
+FOREIGN KEY (Modelo) references ModeloDormitorio(Cod));

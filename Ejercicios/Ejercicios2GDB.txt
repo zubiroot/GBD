@@ -1,0 +1,32 @@
+CREATE DATABASE alumnos;
+USE alumnos;
+
+CREATE TABLE Alumno
+(NumMatricula INT,
+Nombre VARCHAR(15),
+FechaNacimiento DATE,
+Telefono INT,
+PRIMARY KEY(NumMatricula));
+
+CREATE TABLE Profesor
+(IdProfesor INT,
+Nif_p VARCHAR(9) NULL UNIQUE,
+Nombre VARCHAR(15),
+Especialidad VARCHAR(10),
+Telefono INT,
+PRIMARY KEY(IdProfesor));
+
+CREATE TABLE Asignatura
+(CodAsignatura INT,
+Nombre VARCHAR(15),
+IdProfesor INT,
+PRIMARY KEY(CodAsignatura),
+foreign key(IdProfesor) references Profesor(IdProfesor));
+
+CREATE TABLE Recibe
+(CursoEscolar VARCHAR(9),
+NumMatricula INT,
+CodAsignatura INT,
+foreign key(NumMatricula) references Alumno(NumMatricula),
+foreign key(CodAsignatura) references Asignatura(CodAsignatura),
+PRIMARY KEY(CursoEscolar,NumMatricula,CodAsignatura));

@@ -1,0 +1,28 @@
+CREATE DATABASE empresa2;
+USE empresa2;
+
+CREATE TABLE Departamento
+(Id INT,
+Nombre VARCHAR(15),
+Ubicacion Varchar(8),
+PRIMARY KEY(Id));
+
+CREATE TABLE Empleado
+(Id INT,
+Dni VARCHAR(9) NULL UNIQUE,
+Nombre VARCHAR(15),
+Salario DECIMAL(6),
+Telefono INT,
+IdDep INT,
+PRIMARY KEY(Id),
+foreign key(IdDep) references Departamento(Id));
+
+CREATE TABLE Jefe
+(Id INT,
+Dni VARCHAR(9) NULL UNIQUE,
+Nombre VARCHAR(15),
+Salario DECIMAL(6),
+Telefono INT,
+IdDep INT NULL UNIQUE,
+PRIMARY KEY(Id),
+foreign key(IdDep) references Departamento(Id));

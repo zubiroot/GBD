@@ -1,0 +1,31 @@
+CREATE DATABASE empresa;
+USE empresa;
+
+CREATE TABLE Region
+(CodRegion INT,
+Nombre VARCHAR(10),
+PRIMARY KEY(CodRegion));
+
+CREATE TABLE Provincia
+(CodProvincia INT,
+Nombre VARCHAR(15),
+CodRegion INT,
+PRIMARY KEY(CodProvincia),
+FOREIGN KEY (CodRegion) references Region(CodRegion));
+
+CREATE TABLE Localidad
+(CodLocalidad INT,
+Nombre VARCHAR(15),
+CodProvincia INT,
+PRIMARY KEY(CodLocalidad),
+FOREIGN KEY (CodProvincia) references Provincia(CodProvincia));
+
+CREATE TABLE Empleado
+(Id INT primary key,
+Dni VARCHAR(9) NULL UNIQUE,
+Nombre VARCHAR(15),
+FechaNac DATE,
+Telefono INT,
+Salario DECIMAL(6),
+CodLocalidad INT,
+foreign key(CodLocalidad) references Localidad(CodLocalidad));

@@ -1,0 +1,50 @@
+CREATE DATABASE empresa6;
+USE empresa6;
+
+CREATE TABLE Periodista
+(Dni VARCHAR(9),
+Nombre VARCHAR(15),
+Direccion VARCHAR(15),
+Telefono INT,
+Especialista VARCHAR(10),
+PRIMARY KEY(Dni));
+
+CREATE TABLE Sucursal
+(Codigo INT,
+Direccion VARCHAR(15),
+Telefono INT,
+PRIMARY KEY(Codigo));
+
+CREATE TABLE Empleado
+(Dni VARCHAR(9),
+Nombre VARCHAR(15),
+Direccion VARCHAR(15),
+Telefono INT,
+Sucursal INT,
+PRIMARY KEY(Dni),
+FOREIGN KEY (Sucursal) references Sucursal(Codigo));
+
+CREATE TABLE Revista
+(NumReg INT,
+Titulo VARCHAR(15),
+Periodicidad DATE,
+Tipo VARCHAR(10),
+Sucursal INT,
+PRIMARY KEY(NumReg),
+FOREIGN KEY (Sucursal) references Sucursal(Codigo));
+
+CREATE TABLE NumRevista
+(NumReg INT,
+Numero INT,
+NumPaginas INT,
+Fecha DATE,
+CantVendidas INT,
+PRIMARY KEY(NumReg,Numero),
+FOREIGN KEY (NumReg) references Revista(NumReg));
+
+CREATE TABLE escribe
+(NumeroReg INT,
+Dni_Per VARCHAR(9),
+PRIMARY KEY(NumeroReg,Dni_Per),
+FOREIGN KEY (NumeroReg) references Revista(NumReg),
+FOREIGN KEY (Dni_Per) references Periodista(Dni));

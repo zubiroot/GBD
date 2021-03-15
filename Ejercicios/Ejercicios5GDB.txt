@@ -1,0 +1,42 @@
+CREATE DATABASE empresa4;
+USE empresa4;
+
+CREATE TABLE Coche
+(Matricula VARCHAR(7),
+Marca VARCHAR(10),
+Modelo VARCHAR(10),
+Color VARCHAR(10),
+PrecioHora DECIMAL(5),
+PRIMARY KEY(Matricula));
+
+CREATE TABLE Cliente
+(CodCliente INT,
+Dni VARCHAR(9) NULL UNIQUE,
+Nombre VARCHAR(15),
+Direccion VARCHAR(15),
+Telefono INT,
+PRIMARY KEY(CodCliente));
+
+CREATE TABLE Reserva
+(Numero INT,
+FechaInicio date,
+FechaFin date,
+PrecioTotal DECIMAL,
+CodCliente INT,
+PRIMARY KEY(Numero),
+FOREIGN KEY (CodCliente) references Cliente(CodCliente));
+
+CREATE TABLE Avala
+(Avalado INT,
+Avalador INT,
+PRIMARY KEY(Avalado),
+FOREIGN KEY (Avalado) references Cliente(CodCliente),
+FOREIGN KEY (Avalador) references Cliente(CodCliente));
+
+CREATE TABLE Incluye
+(Numero INT,
+Matricula VARCHAR(7),
+litrosgas INT,
+PRIMARY KEY(Numero,Matricula),
+FOREIGN KEY (Numero) references Reserva(Numero),
+FOREIGN KEY (Matricula) references Coche(Matricula));
