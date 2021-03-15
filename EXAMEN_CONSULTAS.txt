@@ -1,0 +1,46 @@
+Consultas sobre una única tabla
+1
+SELECT * FROM concesionario.ventas order by id_vehiculo asc;
+2
+SELECT * from vehiculos where id_vehiculo IN (SELECT id_vehiculo FROM ventas where fecha like '2017%' and total > 20000);
+3
+SELECT nombre, apellido1, apellido2 FROM clientes WHERE (edad<40) AND (edad>30);
+4
+SELECT distinct nombre FROM vendedores where nombre like "%o" ;
+5
+SELECT * FROM vehiculos where marca in ("KIA","Toyota","Nissan");
+6
+SELECT * FROM vehiculos where marca in ("KIA") and tipo in ("hibrido","gasoil");
+
+
+
+Consultas resumen
+1
+SELECT sum(total) FROM ventas;
+2
+SELECT avg(total) FROM ventas;
+3
+SELECT max(total) from ventas where fecha LIKE '%2017%';
+4
+SELECT substr(fecha,1,4),count(*) from ventas group by substr(fecha,1,4) order by 2 DESC
+
+
+
+Subconsultas
+1
+SELECT * from ventas where total > (select avg(total) from ventas);
+2
+SELECT * from ventas where total > (select max(total) from ventas where fecha like '%2017%');
+3
+SELECT nombre, apellido1, apellido2 from vendedores where id_vendedor NOT IN (Select id_vendedor from ventas)
+
+
+
+
+Consultas multitabla
+1
+SELECT clientes.nombre, clientes.apellido1, clientes.apellido2, ventas.id_vehiculo from clientes, ventas where clientes.id_cliente = ventas.id_cliente
+2
+SELECT ventas.id_vehiculo, vehiculos.marca, vehiculos.modelo, ventas.total from vehiculos, ventas where vehiculos.id_vehiculo = ventas.id_vehiculo
+3
+SELECT vendedores.nombre,vendedores.apellido1,vendedores.apellido2, SUM(total) from ventas,vendedores where ventas.id_vendedor = vendedores.id_vendedor and ventas.fecha like '2017%' group by ventas.id_vendedor order by 4 DESC

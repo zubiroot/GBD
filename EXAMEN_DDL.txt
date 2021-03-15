@@ -1,0 +1,47 @@
+create database asir;
+use asir;
+
+create table profesores (
+NIF varchar(9) NOT NULL,
+Nombre varchar(10) NOT NULL,
+Apellido1 varchar(10) NOT NULL,
+Apellido2 varchar(10) NOT NULL,
+Direccion varchar(15),
+Titulacion varchar(15) NOT NULL,
+Salario INT NOT NULL,
+PRIMARY KEY(NIF),
+CONSTRAINT CHECK(Titulacion IN (‘Licenciado’,’Graduado’,’Ingeniero’))
+);
+
+create table cursos (
+CodigoCurso INT NOT NULL,
+Denominacion varchar(15) UNIQUE NOT NULL,
+NIFProfesor varchar(9) NOT NULL,
+MaximoAlumnos INT NOT NULL,
+FechaInicio date NOT NULL,
+FechaFin date NOT NULL,
+Horas int default '40' NOT NULL,
+PRIMARY KEY(CodigoCurso),
+FOREIGN KEY (NIFProfesor) references profesores(NIF),
+CHECK (MaximoAlumnos <20),
+CHECK (FechaFin > FechaInicio)
+);
+
+create table alumnos (
+NIF varchar(9) NOT NULL,
+Nombre varchar(10) NOT NULL,
+Apellido1 varchar(10) NOT NULL,
+Apellido2 varchar(10) NOT NULL,
+Direccion varchar(15),
+Sexo VARCHAR(1) NOT NULL,
+FechaNacimiento date NOT NULL,
+CodigoCurso INT NOT NULL,
+PRIMARY KEY(NIF),
+FOREIGN KEY (CodigoCurso) references cursos(CodigoCurso),
+CONSTRAINT CHECK(Sexo IN (‘M’,’F’))
+);
+
+
+alter table alumnos  add Edad int not null;
+ALTER TABLE cursos ADD CONSTRAINT check(Horas IN(‘30’,’40’,‘60‘));
+alter table profesores DROP COLUMN Direccion;
